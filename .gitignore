@@ -1,0 +1,54 @@
+# Unity generated
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]serSettings/
+
+# Memory captures
+/[Mm]emoryCaptures/
+
+# Recordings
+/[Rr]ecordings/
+
+# Asset meta
+*.pidb
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb.meta
+*.pdb
+*.pdb.meta
+*.mdb
+*.mdb.meta
+
+# Visual Studio / Rider / VS Code
+.vs/
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Plastic SCM
+.plastic/
+
+# Crashlytics
+crashlytics-build.properties
+
+# Large third-party assets
+/Assets/fabs/
+/Assets/terrains/
+/Assets/Settings/
+/Assets/Fab_plugin/
+/Assets/TutorialInfo/
+/Assets/Readme.asset
+/Assets/Readme.asset.meta
+/Assets/InputSystem_Actions.inputactions
+/Assets/InputSystem_Actions.inputactions.meta
