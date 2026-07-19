@@ -31,7 +31,7 @@ namespace Enara.Player
         private void Awake()
         {
             _cc = GetComponent<CharacterController>();
-            _input = FindObjectOfType<Input.InputReader>();
+            _input = Input.InputReader.Instance;
             _settings = Core.GameSettings.LoadOrDefault();
             _state = Core.GameManager.Instance != null ? Core.GameManager.Instance.State : null;
             Cursor.lockState = CursorLockMode.Locked;

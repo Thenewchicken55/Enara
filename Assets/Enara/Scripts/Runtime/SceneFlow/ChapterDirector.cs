@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Enara.Core;
@@ -15,6 +16,10 @@ namespace Enara.SceneFlow
     {
         [SerializeField] private List<ChapterDefinition> chapters = new();
         [SerializeField] private SceneLoader sceneLoader;
+        [SerializeField, Tooltip("If true, call StartGame() automatically in Start(). Useful for the Boot scene; turn off if you have a Main Menu.")]
+        private bool startOnAwake = false;
+        [SerializeField, Tooltip("Delay (seconds) before auto-start so the Fader can fade in. Ignored if startOnAwake is false.")]
+        private float startDelay = 0.5f;
 
         /// <summary>Index of the currently-active chapter, or -1 before <see cref="StartGame"/> is called.</summary>
         public int CurrentIndex { get; private set; } = -1;
@@ -27,6 +32,17 @@ namespace Enara.SceneFlow
         {
             // Auto-find a SceneLoader on the same GameObject or in the scene when this component is added.
             if (sceneLoader == null) sceneLoader = FindObjectOfType<SceneLoader>();
+        }
+
+        private void Start()
+        {
+            if (startOnAwake) StartCoroutine(StartRoutine());
+        }
+
+        private IEnumerator StartRoutine()
+        {
+            if (startDelay > 0f) yield return new WaitForSeconds(startDelay);
+            StartGame();
         }
 
         /// <summary>Begin the game by loading the first chapter.</summary>

@@ -14,6 +14,9 @@ namespace Enara.Input
     /// </summary>
     public sealed class InputReader : MonoBehaviour
     {
+        /// <summary>Per-process singleton. Set in Awake. Null if no InputReader exists.</summary>
+        public static InputReader Instance { get; private set; }
+
         [SerializeField] private InputActionAsset actionsAsset;
         [SerializeField] private bool enableOnStart = true;
         [SerializeField] private string playerMapName = "Player";
@@ -46,6 +49,10 @@ namespace Enara.Input
 
         private void Awake()
         {
+            if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+
             if (actionsAsset == null) actionsAsset = Resources.Load<InputActionAsset>("PlayerControls");
             if (actionsAsset == null)
             {
@@ -60,6 +67,8 @@ namespace Enara.Input
             _advance = map.FindAction("Advance", throwIfNotFound: false);
             _pause = map.FindAction("Pause", throwIfNotFound: false);
         }
+
+        private void OnDestroy() { if (Instance == this) Instance = null; }
 
         private void OnEnable()
         {

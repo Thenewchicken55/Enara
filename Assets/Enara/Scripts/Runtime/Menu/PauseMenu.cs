@@ -27,7 +27,7 @@ namespace Enara.Menu
         {
             if (root == null) root = gameObject;
             Hide();
-            if (input == null) input = FindObjectOfType<Input.InputReader>();
+            if (input == null) input = Input.InputReader.Instance;
             if (resumeButton != null) resumeButton.onClick.AddListener(Resume);
             if (settingsButton != null) settingsButton.onClick.AddListener(OpenSettings);
             if (quitToMenuButton != null) quitToMenuButton.onClick.AddListener(QuitToMenu);

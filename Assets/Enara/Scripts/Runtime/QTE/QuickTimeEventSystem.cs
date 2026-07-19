@@ -30,6 +30,7 @@ namespace Enara.QTE
         private readonly List<QteDefinition> _pending = new();
         private GameSettings _settings;
         private GameStateMachine _state;
+        private Input.InputReader _input;
         private float _nextFireTime;
         private QteDefinition? _active;
         private float _activeEndTime;
@@ -47,6 +48,7 @@ namespace Enara.QTE
         {
             _settings = GameSettings.LoadOrDefault();
             _state = GameManager.Instance != null ? GameManager.Instance.State : null;
+            _input = Input.InputReader.Instance;
             BuildPendingList();
         }
 
@@ -82,14 +84,13 @@ namespace Enara.QTE
             // Active QTE - check timeout and any input.
             if (Time.time >= _activeEndTime) { FailActive(); return; }
 
-            var input = FindObjectOfType<Input.InputReader>();
-            if (input == null) return;
+            if (_input == null) return;
 
             var def = _active.Value;
             bool pressed = def.expectedInput switch
             {
-                QteInput.Space => input.InteractPressedThisFrame || Input.GetKey(KeyCode.Space),
-                QteInput.E => input.InteractPressedThisFrame || Input.GetKeyDown(KeyCode.E),
+                QteInput.Space => _input.InteractPressedThisFrame || Input.GetKey(KeyCode.Space),
+                QteInput.E => _input.InteractPressedThisFrame || Input.GetKeyDown(KeyCode.E),
                 QteInput.Q => Input.GetKeyDown(KeyCode.Q),
                 QteInput.F => Input.GetKeyDown(KeyCode.F),
                 QteInput.LeftClick => Input.GetMouseButtonDown(0),

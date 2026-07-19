@@ -28,7 +28,7 @@ namespace Enara.Interaction
         {
             if (cam == null) cam = GetComponentInChildren<Camera>(true);
             if (promptUI == null) promptUI = FindObjectOfType<InteractionPromptUI>(true);
-            _input = FindObjectOfType<Input.InputReader>();
+            _input = Input.InputReader.Instance;
         }
 
         private void Update()
