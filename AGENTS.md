@@ -39,6 +39,9 @@ Assets/Enara/
       ScriptableObjects/ <- shared SO definitions (kept for compatibility)
     Editor/          <- editor-only tools / inspectors
       BuildTools, ChapterValidator, ReadOnlyAttribute
+    Tests/           <- EditMode unit tests (NUnit + Unity Test Framework)
+      EditMode/        <- EventBusTests, GameStateMachineTests, ServiceLocatorTests,
+                         SaveSystemTests, DialogueGraphTests, MoralityTrackerTests
   Scenes/            <- .unity scenes (Boot, Intro_Drive, Forest_Limp, ...)
   Prefabs/           <- .prefab files
   Resources/         <- runtime-loaded assets (e.g. InputReader, default settings)
@@ -71,12 +74,26 @@ Unity compiles C# on focus / on save. To verify a script compiles:
 3. Watch the console (`Ctrl+Shift+C`); red lines = compile errors.
 
 If you add a new C# file outside the Editor, make sure it is inside a folder covered by an
-`.asmdef` (currently `Assets/Enara/Scripts/Runtime/` or `Assets/Enara/Scripts/Editor/`).
-Files outside any asmdef fall into Unity's default `Assembly-CSharp`, which is fine but
-loses the clean separation we want.
+`.asmdef` (currently `Assets/Enara/Scripts/Runtime/`, `Assets/Enara/Scripts/Editor/`, or
+`Assets/Enara/Scripts/Tests/`). Files outside any asmdef fall into Unity's default
+`Assembly-CSharp`, which is fine but loses the clean separation we want.
 
 If you want to compile from CLI without opening Unity, see `docs/SETUP.md` for the
 `unity -batchmode -nographics` invocation. It is slow; usually not worth it.
+
+## Running tests
+
+The project has an EditMode test assembly at `Assets/Enara/Scripts/Tests/` covering the
+pure-logic systems (EventBus, GameStateMachine, ServiceLocator, SaveSystem, DialogueGraph,
+MoralityTracker). Run them via:
+
+1. Top menu: **Window > General > Test Runner**.
+2. Click the **EditMode** tab.
+3. Click **Run All**.
+
+Tests run in ~1 second. They double as executable documentation for the expected behavior of
+each system. Add new tests when you add pure-logic systems; skip tests for MonoBehaviours that
+are too engine-coupled (Player, QTE, etc.) - those are better tested by playing the game.
 
 ## Conventions
 

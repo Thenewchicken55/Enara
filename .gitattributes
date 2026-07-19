@@ -1,0 +1,74 @@
+# Git attributes for the Enara Unity project.
+# This tells git how to handle line endings and which files are binary.
+
+# Auto-detect text files and normalize line endings to LF on commit, checkout as-is.
+* text=auto eol=lf
+
+# ---- Unity YAML files: treat as text but disable diff noise ----
+# Unity scenes/prefabs/assets are YAML. Text so they diff, but we use Unity's
+# Smart Merge via .gitconfig below to reduce merge conflicts.
+*.unity text eol=lf
+*.prefab text eol=lf
+*.asset text eol=lf
+*.asmdef text eol=lf
+*.inputactions text eol=lf
+*.mixer text eol=lf
+*.controller text eol=lf
+*.anim text eol=lf
+*.playable text eol=lf
+
+# ---- C# source ----
+*.cs text eol=lf
+*.meta text eol=lf
+
+# ---- Markdown / config / JSON ----
+*.md text eol=lf
+*.json text eol=lf
+*.txt text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+
+# ---- Binary asset types (no diffs, no merging) ----
+# Mark these as binary so git doesn't try to merge them as text.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.tga binary
+*.tif binary
+*.tiff binary
+*.psd binary
+*.exr binary
+*.fbx binary
+*.obj binary
+*.blend binary
+*.max binary
+*.mb binary
+*.ma binary
+*.wav binary
+*.mp3 binary
+*.ogg binary
+*.aif binary
+*.aiff binary
+*.bank binary
+*.ttf binary
+*.otf binary
+*.ttc binary
+*.dfont binary
+*.wav.meta binary
+*.mp3.meta binary
+*.png.meta binary
+*.jpg.meta binary
+*.fbx.meta binary
+
+# ---- LFS hook (optional - uncomment when you start using Git LFS) ----
+# When you start adding large art/audio assets, install Git LFS and uncomment:
+#   git lfs install
+# Then these patterns will track large files via LFS instead of regular git.
+#
+# *.png filter=lfs diff=lfs merge=lfs -text
+# *.jpg filter=lfs diff=lfs merge=lfs -text
+# *.psd filter=lfs diff=lfs merge=lfs -text
+# *.fbx filter=lfs diff=lfs merge=lfs -text
+# *.wav filter=lfs diff=lfs merge=lfs -text
+# *.mp3 filter=lfs diff=lfs merge=lfs -text
+# *.ogg filter=lfs diff=lfs merge=lfs -text

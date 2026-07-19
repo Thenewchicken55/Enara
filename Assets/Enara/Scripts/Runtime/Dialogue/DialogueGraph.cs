@@ -63,8 +63,9 @@ namespace Enara.Dialogue
         public DialogueNode Find(string nodeId)
         {
             if (string.IsNullOrEmpty(nodeId)) return null;
+            if (nodes == null) return null;
             for (int i = 0; i < nodes.Count; i++)
-                if (nodes[i].NodeId == nodeId) return nodes[i];
+                if (nodes[i] != null && nodes[i].NodeId == nodeId) return nodes[i];
             return null;
         }
     }

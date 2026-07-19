@@ -39,6 +39,18 @@ Legend: [x] done - [ ] todo - [~] partially done / needs assets
 - [x] Debug cheats (F1-F12 dev keys)
 - [x] Editor tools (BuildTools for CLI builds, ChapterValidator, ReadOnlyAttribute)
 
+## Milestone 1.6: EditMode unit tests [x]
+
+Pure-logic systems have test coverage. Run via `Window > General > Test Runner > EditMode > Run All`.
+
+- [x] EventBusTests (subscribe/publish/unsubscribe/clear/multiple-subscribers/error handling)
+- [x] GameStateMachineTests (transitions, IsInputAllowed for all states, event firing)
+- [x] ServiceLocatorTests (register/get/has/unregister/clear/null-handling)
+- [x] SaveSystemTests (JSON round-trip - the important one - flags/stats/chapter/persistence)
+- [x] DialogueGraphTests (Find by ID, missing/empty/null IDs, duplicate handling)
+- [x] MoralityTrackerTests (clamping at 0 and 100, accumulation, persistence to SaveSystem)
+- [x] Hardened DialogueGraph.Find against null nodes list (driven by a test)
+
 ## Milestone 2: First playable vertical slice [ ] (USER - in Unity Editor)
 
 These tasks require the Unity Editor - they cannot be done by writing text files alone.

@@ -1,4 +1,4 @@
-# Unity generated
+# ===================== Unity generated =====================
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
@@ -6,49 +6,84 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]serSettings/
-
-# Memory captures
 /[Mm]emoryCaptures/
-
-# Recordings
 /[Rr]ecordings/
 
-# Asset meta
-*.pidb
+# ===================== Unity assets we don't want =====================
+# Default Unity input actions (we have our own at Assets/Enara/Resources/)
+/Assets/InputSystem_Actions.inputactions
+/Assets/InputSystem_Actions.inputactions.meta
+# Unity's starter Readme asset
+/Assets/Readme.asset
+/Assets/Readme.asset.meta
+# Legacy folders from the original Unity template
+/Assets/Fab_plugin/
+/Assets/Fab_plugin.meta
+/Assets/TutorialInfo/
+/Assets/TutorialInfo.meta
+/Assets/fabs/
+/Assets/fabs.meta
+/Assets/terrains/
+/Assets/terrains.meta
+
+# ===================== IDE / editor generated =====================
+*.csproj
 *.unityproj
 *.sln
+*.slnx
 *.suo
 *.tmp
 *.user
 *.userprefs
+*.pidb
 *.pidb.meta
 *.pdb
 *.pdb.meta
 *.mdb
 *.mdb.meta
+*.booproj
+*.svd
+*.opendb
+*.VC.db
 
-# Visual Studio / Rider / VS Code
+# IDE folders
 .vs/
 .vscode/
 .idea/
+.gradle/
+.consulo/
+ExportedObj/
 
-# OS files
+# ===================== OS files =====================
 .DS_Store
+.DS_Store*
 Thumbs.db
+Desktop.ini
 
-# Plastic SCM
+# ===================== Plastic SCM (not used; using git) =====================
 .plastic/
+*.private
+*.private.meta
+*.private.[0-9]
+*.private.[0-9].meta
+ignore.conf
 
-# Crashlytics
+# ===================== Crash / analytics =====================
 crashlytics-build.properties
+sysinfo.txt
 
-# Large third-party assets
-/Assets/fabs/
-/Assets/terrains/
-/Assets/Settings/
-/Assets/Fab_plugin/
-/Assets/TutorialInfo/
-/Assets/Readme.asset
-/Assets/Readme.asset.meta
-/Assets/InputSystem_Actions.inputactions
-/Assets/InputSystem_Actions.inputactions.meta
+# ===================== Build artifacts =====================
+*.apk
+*.aab
+*.app
+*.unitypackage
+~UnityDirMonSyncFile~*
+
+# ===================== StreamingAssets binaries (if using Addressables) =====================
+**/Assets/AddressableAssetsData/*/*.bin*
+**/Assets/StreamingAssets/aa.meta
+**/Assets/StreamingAssets/*/aa/*
+
+# ===================== Large third-party assets =====================
+# Add patterns here for asset packs you don't want in version control (e.g. paid store assets).
+# For small free placeholder assets, you usually want to commit them.
