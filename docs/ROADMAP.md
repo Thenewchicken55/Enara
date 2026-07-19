@@ -24,9 +24,20 @@ Legend: [x] done - [ ] todo - [~] partially done / needs assets
 - [x] QTE system (Jesus Prayer loop, heal after N successes)
 - [x] Dialogue system (ScriptableObject graph + runner)
 - [x] Choice system (IChoiceView + ChoicePresenter)
-- [x] AudioManager (music/sfx/vo via AudioMixer)
+- [x] AudioManager (music/sfx/vo via AudioMixer, singleton)
 - [x] Subtitles, Fader, HUD
 - [x] SaveSystem (JSON, flags + stats)
+
+## Milestone 1.5: Expanded gameplay systems [x]
+
+- [x] Cutscene system (CutscenePlayer, CutsceneSignalReceiver, CameraShake, SubtitleSequencePlayer)
+- [x] NPC AI (NPCController, WaypointPatrol, LookAtPlayer, CompanionController for Old Man)
+- [x] World triggers (TriggerZone, PathBranchRouter, WitnessTrigger, MoodLightingController, FootstepController)
+- [x] Story branching (MoralityTracker, EndingDirector, PlayerAppearance/sigil, ScriptureReciter, HolyLightController, WakeUpSequence, ChapterCheckpoint, MiracleEvent)
+- [x] Menus (MainMenu, PauseMenu, SettingsMenu, LoadingScreen, CreditsRoll, DecisionSummaryUI)
+- [x] Path-specific (GlideController for tower descent, TowerProgressionController, LocalizationProvider)
+- [x] Debug cheats (F1-F12 dev keys)
+- [x] Editor tools (BuildTools for CLI builds, ChapterValidator, ReadOnlyAttribute)
 
 ## Milestone 2: First playable vertical slice [ ] (USER - in Unity Editor)
 

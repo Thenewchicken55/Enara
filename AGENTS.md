@@ -19,19 +19,26 @@ The full design lives in `README.md`. Read it before touching gameplay code.
 Assets/Enara/
   Scripts/
     Runtime/        <- gameplay code, organized by feature folder
-      Core/          <- GameManager, GameStateMachine, EventBus, ServiceLocator
+      Core/          <- GameManager, GameStateMachine, EventBus, ServiceLocator, GameSettings, ChapterDefinition
+      SceneFlow/     <- ChapterDirector, SceneLoader
       Player/        <- PlayerController, FirstPersonLook
-      Interaction/   <- IInteractable, InteractionPromptUI
+      Interaction/   <- IInteractable, Interactor, InteractionPromptUI
       QTE/           <- QuickTimeEventSystem (Jesus Prayer mechanic)
       Dialogue/      <- DialogueGraph (ScriptableObject), DialogueRunner
-      Choice/        <- ChoiceNode, ChoicePresenter
-      Audio/         <- AudioManager, MusicPlayer
-      UI/            <- Subtitles, Fader, HUD
+      Choice/        <- ChoicePresenter, IChoiceView
+      Audio/         <- AudioManager (singleton), MusicPlayer
+      UI/            <- Subtitles, Fader (singleton), HUD
       Save/          <- SaveSystem (JSON)
-      SceneFlow/     <- ChapterDirector, SceneLoader
-      Input/         <- InputReader (wraps generated C# from .inputactions)
-      ScriptableObjects/ <- shared SO definitions
+      Input/         <- InputReader (wraps PlayerControls.inputactions)
+      Cutscene/      <- CutscenePlayer, CutsceneSignalReceiver, CameraShake, SubtitleSequencePlayer
+      NPC/           <- NPCController, CompanionController, WaypointPatrol, LookAtPlayer
+      World/         <- TriggerZone, PathBranchRouter, WitnessTrigger, MoodLightingController, FootstepController, GlideController, TowerProgressionController, LocalizationProvider
+      Story/         <- MoralityTracker, EndingDirector, PlayerAppearance, ScriptureReciter, HolyLightController, WakeUpSequence, ChapterCheckpoint, MiracleEvent
+      Menu/          <- MainMenu, PauseMenu, SettingsMenu, LoadingScreen, CreditsRoll, DecisionSummaryUI
+      Utility/       <- DebugCheats (F1-F12 dev keys)
+      ScriptableObjects/ <- shared SO definitions (kept for compatibility)
     Editor/          <- editor-only tools / inspectors
+      BuildTools, ChapterValidator, ReadOnlyAttribute
   Scenes/            <- .unity scenes (Boot, Intro_Drive, Forest_Limp, ...)
   Prefabs/           <- .prefab files
   Resources/         <- runtime-loaded assets (e.g. InputReader, default settings)

@@ -123,8 +123,20 @@ public sealed class PathTrigger : MonoBehaviour
 
 ## Path 1: Path1_OldMan.unity
 
-1. Add the Idol statue GameObject (placeholder: a tall gold cylinder). Add a collider sized to
-   its bounds. Implement `IInteractable` on a small component:
+### Angel encounter (entrance)
+1. Add an empty GameObject `AngelLight` with a `HolyLightController` component.
+   - Wire `root` to itself.
+   - Add a `ParticleSystem` child for the light beam (optional).
+   - Add an `AudioSource` for the ambient hum.
+   - Wire `appearSfx` / `disappearSfx` if you have them.
+2. Add a `TriggerZone` on a collider at the path entrance. In its `onEnter` event:
+   - Call `AngelLight.Appear()`.
+   - (Optional) Start a `SubtitleSequencePlayer` with the angel's warning lines.
+3. Add a second `TriggerZone` further down the path; its `onEnter` calls `AngelLight.Disappear()`.
+
+### Idol statue
+1. Add the Idol GameObject (placeholder: a tall gold cylinder). Add a collider sized to its
+   bounds. Implement `IInteractable` on a small component:
 
 ```csharp
 using UnityEngine;
@@ -146,7 +158,9 @@ public sealed class IdolInteractable : MonoBehaviour, IInteractable
 }
 ```
 
-2. Create the `idolDialogue` asset: right-click `Assets/Enara/Data/Dialogue/`,
+2. Add a `LookAtPlayer` component to the idol. Drag its head bone (or the whole idol) into
+   `bone`. Set `range` to ~6 m. Now the idol turns its head when the player approaches.
+3. Create the `idolDialogue` asset: right-click `Assets/Enara/Data/Dialogue/`,
    **Create > Enara > Dialogue Graph**. Open it and add nodes:
    - `idol_intro`: "I can save you, if you will only bow."
    - choices:
@@ -154,20 +168,59 @@ public sealed class IdolInteractable : MonoBehaviour, IInteractable
      - `refuse` -> label "Refuse, return to prayer" -> target `idol_refused`
    - `idol_easy_path`: leads to the bad ending
    - `idol_refused`: ends the conversation; player continues
-3. Drop the `DialogueGraph` and the `DialogueRunner` into the IdolInteractable.
-4. Add the Old Man GameObject with another `IInteractable` that triggers the walking sequence.
-5. The Virgin Mary "Wake up" beat: at the end of the old-man walk, fire a Timeline cutscene
-   with subtitles for Mary's lines.
+4. Drop the `DialogueGraph` and the `DialogueRunner` into the IdolInteractable.
+5. On the `bow` choice's flag, also wire `PlayerAppearance.ApplySigil()` from a UnityEvent
+   so the sigil tattoo is applied.
+
+### Old Man walk
+1. Add the Old Man GameObject. Add:
+   - `NavMeshAgent` (set speed to ~1.4)
+   - `CompanionController` (drag the player into `playerTransform`, set follow distance ~2.5)
+   - `Collider` + `Rigidbody` (kinematic) so the player can't walk through him.
+2. Bake a NavMesh (`Window > AI > Navigation > Bake`) over the walkable area.
+3. Add a `TriggerZone` at the start of the walk path. Its `onEnter`:
+   - Enables the Old Man GameObject (he was hidden).
+   - Calls `CompanionController.Rejoin()` if he was dismissed.
+4. Add a `MoodLightingController` to the scene. Set `startAmbient` bright, `endAmbient` near
+   black, `durationSeconds` to ~120 (the length of the walk). Wire a TriggerZone at the walk's
+   start to `MoodLightingController.BeginTransition()`.
+
+### Noose wake-up
+1. Place a noose prop in a hidden area of the scene (or its own scene).
+2. Add a `WakeUpSequence` component to an empty GameObject. Wire:
+   - `cutscenePlayer` (optional Timeline cutscene)
+   - `marySubtitles` - a `SubtitleSequencePlayer` with these lines:
+     - Mary: "Leave him alone. Go, now." (2 s)
+     - Mary: "Do you know where you are? Wake up" (3 s)
+     - Mary: "Look around you. Wake up" (3 s)
+     - Mary: "Lord have mercy, Wake Up!" (3 s)
+   - `mary` - the HolyLightController on the Mary GameObject.
+   - `oldMan` - the CompanionController; `oldManLeaveTarget` - where he walks off to.
+   - `nooseCameraPosition` - a Transform near the noose where the camera cuts to.
+   - `playerCamera` - the player's Camera.
+3. Add a `TriggerZone` at the end of the walk. Its `onEnter` calls `WakeUpSequence.Trigger()`.
 
 ---
 
 ## Path 2: Path2_Babel.unity
 
 1. Terrain with a town on a mountain.
-2. NPCs (placeholder capsules) with idle animations.
-3. Dirt-hauling: a few NPCs that walk a looped path (use NavMeshAgent + a simple patrol
-   script, or just an Animator with a root-motion walk).
-4. The leader's dialogue at the top leads to the Tower-of-Babel punishment cutscene.
+2. NPCs (placeholder capsules) - add a `NavMeshAgent` + `WaypointPatrol` to each slave.
+   - Add ~4 waypoint transforms along the dirt-hauling path.
+   - Drag them into the slave's `waypoints` list.
+   - Bake a NavMesh.
+3. Add `LookAtPlayer` to NPCs that should react (the town leader, the thieves).
+4. Add a `TowerProgressionController` with each stage as a GameObject child of the tower.
+   As the player climbs, TriggerZones call `ShowStage(1)`, `ShowStage(2)`, etc. to reveal
+   the tower getting taller.
+5. The leader's dialogue at the top leads to the Tower-of-Babel punishment cutscene. Use a
+   `CutscenePlayer` + `SubtitleSequencePlayer` with multi-language VO.
+6. For the multi-language VO beat, create a `LocalizationProvider` SO per language
+   (`Assets/Enara/Data/Localization/<lang>.asset`).
+7. At the top, give the player a glide ability:
+   - Add a `GlideController` to the player.
+   - Wire a `TriggerZone` that calls `GlideController.Unlock()` when they pick up the
+     hang-glider / robe.
 
 ---
 
@@ -176,17 +229,32 @@ public sealed class IdolInteractable : MonoBehaviour, IInteractable
 1. Monastery exterior + interior. Loud angelic chants (loop an audio clip via the
    `AudioManager.PlayMusic(...)`).
 2. The church interior is empty except for an icon of Christ.
-3. `IInteractable` on the icon: on interaction, play the Psalm 50 subtitles
-   (create a `DialogueGraph` with one node per verse, or just call
-   `Subtitles.Show(verse, duration)` in sequence via a coroutine).
+3. Add an `IInteractable` on the icon. On interaction:
+   - Create a `ScriptureReciter` SO (`Assets/Enara/Data/Scripture/Psalm50.asset`) with the
+     verses of Psalm 50.
+   - The interactable calls `scriptureReciter.Recite(subtitleSequencePlayer)`.
+4. Add `MiracleEvent` SOs (`Assets/Enara/Data/Miracles/<name>.asset`) for the miracles the
+   README mentions. Wire a TriggerZone to call `miracleEvent.Trigger(playerTransform)`.
+5. (Optional) Add a `WitnessTrigger` on a specific object the player must look at before
+   something happens - wire its `onWitnessed` event.
 
 ---
 
 ## Ending: Ending.unity
 
 1. Modern village / hospital scene.
-2. Final denial VO + subtitles.
-3. Credits roll (use a scrolling RectTransform or a Timeline).
+2. Add an `EndingDirector` component. Wire:
+   - `morality` - the MoralityTracker from the persistent Boot scene.
+   - `badEasyPathCutscene` / `denialCutscene` / `resolutionCutscene` - three CutscenePlayers
+     for each ending.
+3. Add a `DecisionSummaryUI` somewhere on the ending Canvas. Author `knownFlags`:
+   - `took_easy_path` -> "You bowed to the idol for an easy rescue."
+   - `path1_chosen` -> "You walked the path of the Old Man."
+   - `path2_chosen` -> "You climbed the Tower of Babel."
+   - `path3_chosen` -> "You entered the monastery."
+   - `has_sigil` -> "You bear the sigil of the idol."
+4. At the end of the chosen ending cutscene, fire a Timeline signal that calls
+   `CreditsRoll.Instance.Play()`.
 
 ---
 
