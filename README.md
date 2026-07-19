@@ -9,12 +9,13 @@ The theme of the game is falling and getting back up, when it comes to our Spiri
 This is a Unity 6 project. If you're new to it, read in this order:
 
 1. `docs/SETUP.md` - install Unity, open the project, first-time setup.
-2. `docs/LEARNING.md` - curated Unity + C# learning path (start here if you don't know Unity).
-3. `docs/ARCHITECTURE.md` - how the code is organized, what each system does.
-4. `docs/ROADMAP.md` - what's done, what's next, in order.
-5. `docs/SCENE_GUIDE.md` - click-by-click instructions for wiring each scene in the Unity Editor.
-6. `docs/ASSETS.md` - what art / audio / data assets you still need to create or source.
-7. `AGENTS.md` - conventions for AI assistants (and humans) editing this repo.
+2. `docs/TUTORIAL_GETTING_STARTED.md` - **start here if you're new to Unity** - step-by-step from cloning the repo to a playable scene.
+3. `docs/LEARNING.md` - curated Unity + C# learning path.
+4. `docs/ARCHITECTURE.md` - how the code is organized, what each system does.
+5. `docs/ROADMAP.md` - what's done, what's next, in order.
+6. `docs/SCENE_GUIDE.md` - click-by-click instructions for wiring each scene in the Unity Editor.
+7. `docs/ASSETS.md` - what art / audio / data assets you still need to create or source.
+8. `AGENTS.md` - conventions for AI assistants (and humans) editing this repo.
 
 ## Plot
 
