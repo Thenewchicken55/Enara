@@ -2,9 +2,21 @@
 
 Enara is the name of the video game. In Arabic, it means Light or Enlightenment.
 
-The theme of the game is falling and getting back up, when it comes to our Spiritual Journey to God. The user starts off far from God. Then a tribulation happens, then they go back to God, and feel slightly better, then forsake him and fall back down in tribulation.
+The theme of the game is falling and getting back up, when it comes to our Spiritual Journey to God. The user starts off far from God. Then a tribulation happens, then they go back to God, and feel slightly better, then forsakes Him and falls back down in tribulation.
 
-### Plot
+## Documentation
+
+This is a Unity 6 project. If you're new to it, read in this order:
+
+1. `docs/SETUP.md` - install Unity, open the project, first-time setup.
+2. `docs/LEARNING.md` - curated Unity + C# learning path (start here if you don't know Unity).
+3. `docs/ARCHITECTURE.md` - how the code is organized, what each system does.
+4. `docs/ROADMAP.md` - what's done, what's next, in order.
+5. `docs/SCENE_GUIDE.md` - click-by-click instructions for wiring each scene in the Unity Editor.
+6. `docs/ASSETS.md` - what art / audio / data assets you still need to create or source.
+7. `AGENTS.md` - conventions for AI assistants (and humans) editing this repo.
+
+## Plot
 
 - The game starts off driving late at night (in forest/hills) with some metal music playing or something.
   - maybe here they see a sign or something pointing to camp?
@@ -75,3 +87,16 @@ The theme of the game is falling and getting back up, when it comes to our Spiri
 - I'm thinking the player somehow escapes the 3 Paths. Finds modern village, Hospital, or some help.
 - Then they deny any of the things the player went through are actually real.
 - Then resolutoin
+
+## Current status
+
+See `docs/ROADMAP.md` for the full milestone breakdown. In short:
+
+- **Done**: folder structure, all core C# gameplay systems (game state, player controller,
+  QTE / Jesus Prayer loop, dialogue, choices, audio, save, fade, subtitles, input).
+- **Next (you)**: open the project in Unity, follow `docs/SCENE_GUIDE.md` to create the Boot
+  scene, the GameSettings asset, the AudioMixer, and the first playable `Forest_Limp` scene.
+
+Every C# script is documented with XML `///` comments - hover any class or method in your IDE
+to see what it does.
+
