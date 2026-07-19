@@ -13,6 +13,9 @@ namespace Enara.Audio
     /// </summary>
     public sealed class AudioManager : MonoBehaviour
     {
+        /// <summary>Per-process singleton. Set in Awake.</summary>
+        public static AudioManager Instance { get; private set; }
+
         [SerializeField] private AudioMixer mixer;
         [SerializeField] private AudioSource musicSource;
         [SerializeField] private AudioSource sfxSource;
@@ -22,6 +25,14 @@ namespace Enara.Audio
         [SerializeField] private AudioClip defaultMusic;
 
         private readonly HashSet<int> _playingSfxIds = new();
+
+        private void Awake()
+        {
+            if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+            Instance = this;
+        }
+
+        private void OnDestroy() { if (Instance == this) Instance = null; }
 
         private void Reset()
         {
